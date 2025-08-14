@@ -1,0 +1,251 @@
+.login-bg {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 380px;
+  border-radius: 12px;
+  background-color: #fff;
+}
+
+.login-logo {
+  width: 100px;
+  height: auto;
+}
+
+@media (max-width: 576px) {
+  .login-logo {
+    width: 80px; /* lebih kecil di HP */
+  }
+}
+
+/* Style dasar input */
+.form-group input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+/* Efek saat fokus */
+.form-group input:focus {
+  border-color: #007bff; /* biru */
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
+  transform: scale(1.02); /* sedikit membesar */
+}
+
+/* Animasi error */
+.input-error {
+  border-color: #dc3545 !important; /* merah */
+  animation: shake 0.3s ease;
+}
+
+/* Animasi shake */
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  50% {
+    transform: translateX(4px);
+  }
+  75% {
+    transform: translateX(-4px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.login-message {
+  font-size: 0.9rem;
+}
+
+label {
+  font-weight: 500;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper .input-group {
+  position: relative;
+}
+
+.password-wrapper label {
+  display: block;
+  text-align: left;
+  margin-bottom: 4px;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 40px; /* beri ruang untuk icon */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  user-select: none;
+  transition: color 0.3s;
+}
+
+.toggle-password:hover {
+  color: #007bff;
+}
+
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-title {
+  text-align: center;
+  animation: fadeSlideUp 0.8s ease-out forwards;
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon .input-icon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #888;
+  pointer-events: none;
+}
+
+.input-with-icon input {
+  padding-left: 38px; /* beri ruang untuk icon kiri */
+}
+
+.input-with-icon .toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 16px;
+  color: #888;
+  user-select: none;
+}
+
+.input-with-icon .toggle-password:hover {
+  color: #007bff;
+}
+
+/* Fade-in + bounce lalu lanjut floating */
+@keyframes fadeBounce {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(-30px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.1) translateY(5px);
+  }
+  80% {
+    transform: scale(0.95) translateY(-2px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes floating {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Kombinasi animasi */
+.animate-logo {
+  animation: fadeBounce 1s ease-out forwards, floating 3s ease-in-out infinite;
+  animation-delay: 0s, 1s; /* floating mulai setelah fadeBounce selesai */
+}
+
+.animate-logo {
+  animation: fadeBounce 1s ease-out forwards, floating 3s ease-in-out infinite;
+}
+
+/* Tombol login modern */
+.btn-login {
+  background: linear-gradient(45deg, #ff6b6b, #f06595, #845ef7);
+  background-size: 300% 300%;
+  border: none;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 12px;
+  border-radius: 50px;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(132, 94, 247, 0.4);
+  animation: gradientMove 4s ease infinite;
+}
+
+/* Efek hover */
+.btn-login:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(132, 94, 247, 0.6);
+}
+
+/* Efek klik */
+.btn-login:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 4px 10px rgba(132, 94, 247, 0.4);
+}
+
+/* Efek gradien bergerak */
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Disabled state */
+.btn-login:disabled {
+  background: #ccc;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.btn-login svg {
+  vertical-align: middle;
+  font-size: 1.1rem;
+}
