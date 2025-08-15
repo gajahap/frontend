@@ -63,15 +63,75 @@ const Outstanding = () => {
     fetchCustomerOptions();
   }, []);
 
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   setIsLoadingData(true);
+  //   const formData = new FormData(event.target);
+
+  //   const startDate = new Date(params.start_date);
+  //   const endDate = new Date(params.end_date);
+
+  //   // Validasi end_date lebih besar dari start_date
+  //   if (endDate < startDate) {
+  //     setNotification({
+  //       show: true,
+  //       title: "Perhatian !!!",
+  //       message: "Tanggal akhir harus lebih besar dari tanggal awal",
+  //       variant: "warning",
+  //     });
+  //     setIsLoadingData(false);
+  //     return;
+  //   }
+
+  //   // Validasi end_date tidak lebih dari 1 tahun dari start_date
+  //   const oneYearLater = new Date(startDate);
+  //   oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
+
+  //   if (endDate > oneYearLater) {
+  //     setNotification({
+  //       show: true,
+  //       title: "Perhatian !!!",
+  //       message:
+  //         "Tanggal akhir tidak boleh lebih dari 1 tahun dari tanggal awal",
+  //       variant: "warning",
+  //     });
+  //     setIsLoadingData(false);
+  //     return;
+  //   }
+
+  //   // Jika valid, kirim request
+  //   axiosInstance
+  //     .get("marketing/outstanding", { params: params })
+  //     .then((response) => {
+  //       console.log(response.data.data.grouped_outstanding_items);
+  //       setData(response.data.data.grouped_outstanding_items || []);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       setError(error.response?.data?.errors || {});
+  //     })
+  //     .finally(() => {
+  //       setIsLoadingData(false);
+  //     });
+
+  //   console.log("Data yang dikirim:", params);
+  // };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     setIsLoadingData(true);
+
+    // Ambil semua value dari form
     const formData = new FormData(event.target);
+    const allParams = Object.fromEntries(formData.entries());
 
-    const startDate = new Date(params.start_date);
-    const endDate = new Date(params.end_date);
+    // Update params state (opsional kalau mau disimpan)
+    setParams(allParams);
 
-    // Validasi end_date lebih besar dari start_date
+    const startDate = new Date(allParams.start_date);
+    const endDate = new Date(allParams.end_date);
+
+    // Validasi tanggal seperti sebelumnya
     if (endDate < startDate) {
       setNotification({
         show: true,
@@ -83,10 +143,8 @@ const Outstanding = () => {
       return;
     }
 
-    // Validasi end_date tidak lebih dari 1 tahun dari start_date
     const oneYearLater = new Date(startDate);
     oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
-
     if (endDate > oneYearLater) {
       setNotification({
         show: true,
@@ -99,9 +157,9 @@ const Outstanding = () => {
       return;
     }
 
-    // Jika valid, kirim request
+    // Kirim request dengan semua params (termasuk po_no)
     axiosInstance
-      .get("marketing/outstanding", { params: params })
+      .get("marketing/outstanding", { params: allParams })
       .then((response) => {
         console.log(response.data.data.grouped_outstanding_items);
         setData(response.data.data.grouped_outstanding_items || []);
@@ -114,7 +172,7 @@ const Outstanding = () => {
         setIsLoadingData(false);
       });
 
-    console.log("Data yang dikirim:", params);
+    console.log("Data yang dikirim:", allParams);
   };
 
   const handleCloseNotification = () => {
@@ -496,6 +554,26 @@ const Outstanding = () => {
             </Col>
             <Col>
               <Form.Group className="mb-3 flex-grow-1">
+                <Form.Label>No Po</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="po_no"
+                  onChange={handleChangeParam}
+                />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group className="mb-3 flex-grow-1">
+                <Form.Label>No Wo</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="no_wo"
+                  onChange={handleChangeParam}
+                />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group className="mb-3 flex-grow-1">
                 <Form.Label></Form.Label>
                 <br />
                 <Button
@@ -528,9 +606,12 @@ const Outstanding = () => {
             ? "Tidak Ada Data"
             : `Hasil Untuk ${
                 customerOptions.find(
-                  (option) => option.value === params.customer_id
-                )?.label
-              } dari tanggal ${params.start_date} s/d ${params.end_date}`}
+                  (option) =>
+                    String(option.value) === String(params.customer_id)
+                )?.label || "-"
+              } dari tanggal ${params.start_date || "-"} s/d ${
+                params.end_date || "-"
+              }`}
         </h5>
 
         {error !== null && (
